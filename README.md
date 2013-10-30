@@ -1,5 +1,7 @@
 # grunt-environment
 
+[![Build Status](https://travis-ci.org/logankoester/grunt-environment.png)](https://travis-ci.org/logankoester/grunt-environment)
+
 > Add environment-centric logic to your Grunt builds
 
 ## Getting Started
