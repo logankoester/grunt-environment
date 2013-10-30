@@ -9,10 +9,6 @@ module.exports = (grunt) ->
 
   # Project configuration.
   grunt.initConfig
-    # Before generating any new files, remove any previously-created files.
-    clean:
-      tests: ["tmp"]
-
     # Configuration to be run (and then tested).
     environment:
       default_options:
@@ -32,12 +28,24 @@ module.exports = (grunt) ->
     nodeunit:
       tests: ['test/*_test.js']
 
+    coffee:
+      tasks:
+        expand: true
+        cwd: 'src/tasks/'
+        src: '**/*.coffee'
+        dest: 'tasks/'
+        ext: '.js'
+
+    clean:
+      tests: ["tmp"]
+
   # Actually load this plugin's task(s).
   grunt.loadTasks 'tasks'
 
   # These plugins provide necessary tasks.
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-nodeunit'
+  grunt.loadNpmTasks 'grunt-contrib-coffee'
 
   # Whenever the "test" task is run, first clean the "tmp" dir, then run this
   # plugin's task(s), then test the result.
