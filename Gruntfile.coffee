@@ -40,6 +40,15 @@ module.exports = (grunt) ->
       tasks: ['tasks']
       test: ['test']
 
+    copy:
+      test_fixtures:
+        files: [{
+          expand: true
+          cwd: 'src/test/fixtures'
+          src: ['**/*']
+          dest: 'test/fixtures/'
+        }]
+
     bump:
       options:
         commit: true
@@ -57,6 +66,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-nodeunit'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-bump'
 
   grunt.registerTask 'test', ['environment', 'nodeunit']
