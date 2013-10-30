@@ -6,58 +6,49 @@
 # * Licensed under the MIT license.
 #
 module.exports = (grunt) ->
-
-  # Project configuration.
   grunt.initConfig
-    # Configuration to be run (and then tested).
-    environment:
-      default_options:
-        options: {}
-        files:
-          "tmp/default_options": ["test/fixtures/testing", "test/fixtures/123"]
 
-      custom_options:
-        options:
-          separator: ": "
-          punctuation: " !!!"
-
-        files:
-          "tmp/custom_options": ["test/fixtures/testing", "test/fixtures/123"]
-
-    # Unit tests.
     nodeunit:
-      tests: ['test/*_test.js']
+        tests: ['test/*_test.js']
 
-    coffee:
-      tasks:
-        expand: true
-        cwd: 'src/tasks/'
-        src: '**/*.coffee'
-        dest: 'tasks/'
-        ext: '.js'
-
-    clean:
-      tasks: ['tasks']
-      test: ['test']
-
-    copy:
-      test_fixtures:
-        files: [{
+      coffee:
+        tasks:
           expand: true
-          cwd: 'src/test/fixtures'
-          src: ['**/*']
-          dest: 'test/fixtures/'
-        }]
+          cwd: 'src/tasks/'
+          src: '**/*.coffee'
+          dest: 'tasks/'
+          ext: '.js'
 
-    bump:
-      options:
-        commit: true
-        commitMessage: 'Release v%VERSION%'
-        commitFiles: ['package.json']
-        createTag: true
-        tagName: 'v%VERSION%'
-        tagMessage: 'Version %VERSION%'
-        push: false
+        test:
+          expand: true
+          cwd: 'src/test/'
+          src: '**/*.coffee'
+          dest: 'test/'
+          ext: '.js'
+
+      clean:
+        tasks: ['tasks']
+        test: ['test']
+        build: ['build.json']
+
+      copy:
+        test_fixtures:
+          files: [{
+            expand: true
+            cwd: 'src/test/fixtures'
+            src: ['**/*']
+            dest: 'test/fixtures/'
+          }]
+
+      bump:
+        options:
+          commit: true
+          commitMessage: 'Release v%VERSION%'
+          commitFiles: ['package.json']
+          createTag: true
+          tagName: 'v%VERSION%'
+          tagMessage: 'Version %VERSION%'
+          push: false
 
   # Actually load this plugin's task(s).
   grunt.loadTasks 'tasks'
@@ -69,9 +60,9 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-bump'
 
-  grunt.registerTask 'test', ['environment', 'nodeunit']
+  grunt.registerTask 'test', ['environment:development', 'nodeunit']
 
   grunt.registerTask 'build', ['clean', 'coffee', 'copy']
 
   # By default, lint and run all tests.
- grunt.registerTask 'default', ['build', 'test']
+  grunt.registerTask 'default', ['build', 'test']

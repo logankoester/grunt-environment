@@ -1,50 +1,27 @@
-/*
- * grunt-environment
- * https://github.com/logankoester/grunt-environment
- *
- * Copyright (c) 2013 Logan Koester
- * Licensed under the MIT license.
- */
-
-'use strict';
-
-module.exports = function(grunt) {
-
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
-
-  grunt.registerMultiTask('environment', 'Your task description goes here.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
+(function() {
+  module.exports = function(grunt) {
+    grunt.readBuildConfig = function() {
+      grunt.config.set('build', grunt.file.readJSON('build.json'));
+      grunt.config.set('build.timestamp', Date.now());
+      grunt.config.set('build.version', grunt.config.get('pkg.version'));
+      return grunt.log.ok("Current environment: " + (grunt.config.get('build.environment')));
+    };
+    grunt.writeBuildConfig = function(config) {
+      grunt.log.ok('Writing build.json...');
+      return grunt.file.write('build.json', JSON.stringify(config));
+    };
+    grunt.registerTask('environment:development', function() {
+      grunt.writeBuildConfig({
+        environment: 'development'
+      });
+      return grunt.readBuildConfig();
     });
-
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
-
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
+    return grunt.registerTask('environment:production', function() {
+      grunt.writeBuildConfig({
+        environment: 'production'
+      });
+      return grunt.readBuildConfig();
     });
-  });
+  };
 
-};
+}).call(this);

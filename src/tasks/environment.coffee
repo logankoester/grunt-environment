@@ -4,45 +4,24 @@
 # *
 # * Copyright (c) 2013 Logan Koester
 # * Licensed under the MIT license.
-# 
-"use strict"
+#
+
 module.exports = (grunt) ->
-  
-  # Please see the Grunt documentation for more information regarding task
-  # creation: http://gruntjs.com/creating-tasks
-  grunt.registerMultiTask "environment", "Your task description goes here.", ->
-    
-    # Merge task-specific and/or target-specific options with these defaults.
-    options = @options(
-      punctuation: "."
-      separator: ", "
-    )
-    
-    # Iterate over all specified file groups.
-    @files.forEach (f) ->
-      
-      # Concat specified files.
-      
-      # Warn on and remove invalid source files (if nonull was set).
-      
-      # Read file source.
-      src = f.src.filter((filepath) ->
-        unless grunt.file.exists(filepath)
-          grunt.log.warn "Source file \"" + filepath + "\" not found."
-          false
-        else
-          true
-      ).map((filepath) ->
-        grunt.file.read filepath
-      ).join(grunt.util.normalizelf(options.separator))
-      
-      # Handle options.
-      src += options.punctuation
-      
-      # Write the destination file.
-      grunt.file.write f.dest, src
-      
-      # Print a success message.
-      grunt.log.writeln "File \"" + f.dest + "\" created."
 
+  grunt.readBuildConfig = ->
+    grunt.config.set 'build', grunt.file.readJSON('build.json')
+    grunt.config.set 'build.timestamp', Date.now()
+    grunt.config.set 'build.version', grunt.config.get('pkg.version')
+    grunt.log.ok "Current environment: #{grunt.config.get('build.environment')}"
 
+  grunt.writeBuildConfig = (config) ->
+    grunt.log.ok 'Writing build.json...'
+    grunt.file.write 'build.json', JSON.stringify(config)
+
+  grunt.registerTask 'environment:development', ->
+    grunt.writeBuildConfig environment: 'development'
+    grunt.readBuildConfig()
+
+  grunt.registerTask 'environment:production', ->
+    grunt.writeBuildConfig environment: 'production'
+    grunt.readBuildConfig()
