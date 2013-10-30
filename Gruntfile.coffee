@@ -37,7 +37,18 @@ module.exports = (grunt) ->
         ext: '.js'
 
     clean:
-      tests: ["tmp"]
+      tasks: ['tasks']
+      test: ['test']
+
+    bump:
+      options:
+        commit: true
+        commitMessage: 'Release v%VERSION%'
+        commitFiles: ['package.json']
+        createTag: true
+        tagName: 'v%VERSION%'
+        tagMessage: 'Version %VERSION%'
+        push: false
 
   # Actually load this plugin's task(s).
   grunt.loadTasks 'tasks'
@@ -46,10 +57,11 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-nodeunit'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-bump'
 
-  # Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  # plugin's task(s), then test the result.
-  grunt.registerTask 'test', ['clean', 'environment', 'nodeunit']
+  grunt.registerTask 'test', ['environment', 'nodeunit']
+
+  grunt.registerTask 'build', ['clean', 'coffee', 'copy']
 
   # By default, lint and run all tests.
-  grunt.registerTask 'default', ['build', 'test']
+ grunt.registerTask 'default', ['build', 'test']
