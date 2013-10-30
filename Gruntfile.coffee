@@ -60,7 +60,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-bump'
 
-  grunt.registerTask 'test', ['environment:development', 'nodeunit']
+  grunt.registerTask 'test', ['environment:development', 'nodeunit', 'clean:build']
 
   grunt.registerTask 'build', ['clean', 'coffee', 'copy']
 
