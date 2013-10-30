@@ -11,79 +11,30 @@ If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out th
 npm install grunt-environment --save-dev
 ```
 
-Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
+Once the plugin has been installed, it may be enabled inside your Gruntfile with this snippet of JavaScript:
 
 ```js
 grunt.loadNpmTasks('grunt-environment');
+try {
+  grunt.readBuildConfig();
+} catch(e) {
+  grunt.task.run('environment:development') // Set default environment
+}
+
 ```
 
-## The "environment" task
+The **grunt-environment** plugin will add the tasks `environment:development` and
+`environment:production`. They will maintain state in a file called `build.json` in
+your project directory.
 
-### Overview
-In your project's Gruntfile, add a section named `environment` to the data object passed into `grunt.initConfig()`.
+You can now use `grunt.config.get('build.environment')` in your other Grunt tasks to
+create conditions around these environments.
 
-```js
-grunt.initConfig({
-  environment: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-})
-```
+For convenience, the `build.timestamp` and `build.version` (mirror of pkg.version) are
+set as well.
 
-### Options
-
-#### options.separator
-Type: `String`
-Default value: `',  '`
-
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
-
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  environment: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  environment: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+You may find it useful to pass `build` as a variable into a template for your application to use at runtime.
 
 ## Release History
-_(Nothing yet)_
+
+* 0.1.0 - First release
