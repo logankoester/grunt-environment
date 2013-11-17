@@ -1,6 +1,8 @@
 # grunt-environment
 
 [![Build Status](https://travis-ci.org/logankoester/grunt-environment.png)](https://travis-ci.org/logankoester/grunt-environment)
+[![Dependency Status](https://david-dm.org/logankoester/grunt-environment.png)](https://david-dm.org/logankoester/grunt-environment)
+[![devDependency Status](https://david-dm.org/logankoester/grunt-environment/dev-status.png)](https://david-dm.org/logankoester/grunt-environment#info=devDependencies)
 
 > Add environment-centric logic to your Grunt builds
 
