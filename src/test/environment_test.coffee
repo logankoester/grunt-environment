@@ -13,6 +13,6 @@ exports.environment =
 
   'stored environment': (test) ->
     test.expect 1
-    environment = grunt.file.readJSON 'build.json'
+    environment = grunt.file.readJSON '.grunt/environment.json'
     test.equal environment.env, 'development', 'should include the development env'
     test.done()

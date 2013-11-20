@@ -12,7 +12,7 @@ module.exports = (grunt) ->
       default: 'development'
       environments: ['development', 'production']
       version: '0.0.0'
-      file: 'build.json'
+      file: '.grunt/environment.json'
 
     nodeunit:
       tests: ['test/*_test.js']
@@ -64,7 +64,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-bump'
 
-  grunt.registerTask 'test', ['environment:development', 'nodeunit', 'clean']
+  grunt.registerTask 'test', ['environment:development', 'nodeunit']
 
   grunt.registerTask 'build', ['clean', 'coffee', 'copy']
 

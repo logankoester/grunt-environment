@@ -17,7 +17,7 @@
     'stored environment': function(test) {
       var environment;
       test.expect(1);
-      environment = grunt.file.readJSON('build.json');
+      environment = grunt.file.readJSON('.grunt/environment.json');
       test.equal(environment.env, 'development', 'should include the development env');
       return test.done();
     }

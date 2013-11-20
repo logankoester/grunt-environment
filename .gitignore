@@ -4,3 +4,4 @@ tmp
 *.swp
 *.swo
 *.swn
+.grunt/environment.json

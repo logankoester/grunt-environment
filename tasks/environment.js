@@ -1,25 +1,30 @@
 (function() {
   module.exports = function(grunt) {
-    var defaultFile, ensureDefaultDirExists, path, readBuildConfig, writeBuildConfig;
+    var defaultFile, ensureDefaultDirExists, getFile, path, readBuildConfig, writeBuildConfig;
     path = require('path');
     defaultFile = path.join('.grunt', 'environment.json');
-    readBuildConfig = function() {
-      var defaultEnv, file, version;
+    getFile = function() {
+      var file;
       file = grunt.config.get('environment.file');
-      version = grunt.config.get('environment.version');
-      defaultEnv = grunt.config.get('environment.default');
       if (typeof file === 'function') {
         file = file();
       }
+      file || (file = defaultFile);
+      return file;
+    };
+    readBuildConfig = function() {
+      var defaultEnv, file, version;
+      version = grunt.config.get('environment.version');
+      defaultEnv = grunt.config.get('environment.default');
       if (typeof version === 'function') {
         version = version();
       }
       if (typeof defaultEnv === 'function') {
         defaultEnv = defaultEnv();
       }
-      file || (file = defaultFile);
       version || (version = '0.0.0');
       defaultEnv || (defaultEnv = 'development');
+      file = getFile();
       grunt.config.set('environment', grunt.file.readJSON(file));
       grunt.config.set('environment.timestamp', Date.now());
       grunt.config.set('environment.version', version);
@@ -27,7 +32,7 @@
     };
     writeBuildConfig = function(config) {
       var file;
-      file = grunt.config.get('environment.file');
+      file = getFile();
       if (file === defaultFile) {
         ensureDefaultDirExists();
       }
@@ -36,7 +41,6 @@
     };
     ensureDefaultDirExists = function() {
       if (!grunt.file.isDir('.grunt')) {
-        grunt.log.ok("Writing " + file);
         return grunt.file.mkdir('.grunt');
       }
     };
