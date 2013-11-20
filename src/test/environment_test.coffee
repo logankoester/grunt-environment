@@ -4,11 +4,15 @@ exports.environment =
   setUp: (done) ->
     done()
 
-  default_options: (test) ->
-    test.expect 2
+  'live environment': (test) ->
+    test.expect 3
+    test.equal grunt.config.get('environment.env'), 'development', 'should include the development env'
+    test.ok grunt.config.get('environment.timestamp'), 'should include a timestamp'
+    test.equal grunt.config.get('environment.version'), '0.0.0', 'should include the default version'
+    test.done()
 
-    build = grunt.file.readJSON 'build.json'
-    test.equal build.environment, 'development', 'should default to development environment'
-    test.equal grunt.config.get('build.environment'), 'development', 'should set config build.environment'
-
+  'stored environment': (test) ->
+    test.expect 1
+    environment = grunt.file.readJSON 'build.json'
+    test.equal environment.env, 'development', 'should include the development env'
     test.done()

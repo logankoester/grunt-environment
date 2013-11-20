@@ -8,47 +8,51 @@
 module.exports = (grunt) ->
   grunt.initConfig
 
+    environment:
+      default: 'development'
+      environments: ['development', 'production']
+      version: '0.0.0'
+      file: 'build.json'
+
     nodeunit:
-        tests: ['test/*_test.js']
+      tests: ['test/*_test.js']
 
-      coffee:
-        tasks:
+    coffee:
+      tasks:
+        expand: true
+        cwd: 'src/tasks/'
+        src: '**/*.coffee'
+        dest: 'tasks/'
+        ext: '.js'
+
+      test:
+        expand: true
+        cwd: 'src/test/'
+        src: '**/*.coffee'
+        dest: 'test/'
+        ext: '.js'
+
+    clean:
+      environment: ['.grunt/environment.json']
+
+    copy:
+      test_fixtures:
+        files: [{
           expand: true
-          cwd: 'src/tasks/'
-          src: '**/*.coffee'
-          dest: 'tasks/'
-          ext: '.js'
+          cwd: 'src/test/fixtures'
+          src: ['**/*']
+          dest: 'test/fixtures/'
+        }]
 
-        test:
-          expand: true
-          cwd: 'src/test/'
-          src: '**/*.coffee'
-          dest: 'test/'
-          ext: '.js'
-
-      clean:
-        tasks: ['tasks']
-        test: ['test']
-        build: ['build.json']
-
-      copy:
-        test_fixtures:
-          files: [{
-            expand: true
-            cwd: 'src/test/fixtures'
-            src: ['**/*']
-            dest: 'test/fixtures/'
-          }]
-
-      bump:
-        options:
-          commit: true
-          commitMessage: 'Release v%VERSION%'
-          commitFiles: ['package.json']
-          createTag: true
-          tagName: 'v%VERSION%'
-          tagMessage: 'Version %VERSION%'
-          push: false
+    bump:
+      options:
+        commit: true
+        commitMessage: 'Release v%VERSION%'
+        commitFiles: ['package.json']
+        createTag: true
+        tagName: 'v%VERSION%'
+        tagMessage: 'Version %VERSION%'
+        push: false
 
   # Actually load this plugin's task(s).
   grunt.loadTasks 'tasks'
@@ -60,7 +64,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-bump'
 
-  grunt.registerTask 'test', ['environment:development', 'nodeunit', 'clean:build']
+  grunt.registerTask 'test', ['environment:development', 'nodeunit', 'clean']
 
   grunt.registerTask 'build', ['clean', 'coffee', 'copy']
 
