@@ -34,11 +34,6 @@ grunt.initConfig({
 });
 
 grunt.loadNpmTasks('grunt-environment');
-try {
-  grunt.readBuildConfig();
-} catch(e) {
-  grunt.task.run('environment:development') // Set default environment
-}
 
 ```
 
@@ -59,6 +54,15 @@ The additional keys  `timestamp` and `version` are included as well.
 > You may find it useful to pass `build` as a variable into a template for your application to use at runtime.
 
 ## Release History
+
+###  0.3.0
+
+* No longer necessary to try/catch initialize manually after tasks are loaded
+* Adds `grunt environment` (with no subtask) to echo current environment from file
+
+###  0.2.1
+
+* Small fixes
 
 ###  0.2.0
 

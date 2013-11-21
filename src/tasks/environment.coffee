@@ -42,10 +42,21 @@ module.exports = (grunt) ->
     unless grunt.file.isDir('.grunt')
       grunt.file.mkdir('.grunt')
 
+  initEnvironment = ->
+    try
+      readBuildConfig()
+    catch error
+      defaultEnv = grunt.config.get('environment.default')
+      grunt.task.run "environment:##{defaultEnv}"
+
   grunt.config.get('environment.environments').forEach (env) ->
     grunt.registerTask "environment:#{env}", ->
       writeBuildConfig env: env
       readBuildConfig()
 
+  grunt.registerTask 'environment', -> readBuildConfig()
+
   grunt.environment = ->
     grunt.config.get('environment.env')
+
+  initEnvironment()

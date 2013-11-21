@@ -1,6 +1,6 @@
 (function() {
   module.exports = function(grunt) {
-    var defaultFile, ensureDefaultDirExists, getFile, path, readBuildConfig, writeBuildConfig;
+    var defaultFile, ensureDefaultDirExists, getFile, initEnvironment, path, readBuildConfig, writeBuildConfig;
     path = require('path');
     defaultFile = path.join('.grunt', 'environment.json');
     getFile = function() {
@@ -44,6 +44,16 @@
         return grunt.file.mkdir('.grunt');
       }
     };
+    initEnvironment = function() {
+      var defaultEnv, error;
+      try {
+        return readBuildConfig();
+      } catch (_error) {
+        error = _error;
+        defaultEnv = grunt.config.get('environment.default');
+        return grunt.task.run("environment:#" + defaultEnv);
+      }
+    };
     grunt.config.get('environment.environments').forEach(function(env) {
       return grunt.registerTask("environment:" + env, function() {
         writeBuildConfig({
@@ -52,9 +62,13 @@
         return readBuildConfig();
       });
     });
-    return grunt.environment = function() {
+    grunt.registerTask('environment', function() {
+      return readBuildConfig();
+    });
+    grunt.environment = function() {
       return grunt.config.get('environment.env');
     };
+    return initEnvironment();
   };
 
 }).call(this);
