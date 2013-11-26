@@ -47,7 +47,7 @@ module.exports = (grunt) ->
       readBuildConfig()
     catch error
       defaultEnv = grunt.config.get('environment.default')
-      grunt.task.run "environment:##{defaultEnv}"
+      grunt.task.run "environment:#{defaultEnv}"
 
   grunt.config.get('environment.environments').forEach (env) ->
     grunt.registerTask "environment:#{env}", ->

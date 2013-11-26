@@ -51,7 +51,7 @@
       } catch (_error) {
         error = _error;
         defaultEnv = grunt.config.get('environment.default');
-        return grunt.task.run("environment:#" + defaultEnv);
+        return grunt.task.run("environment:" + defaultEnv);
       }
     };
     grunt.config.get('environment.environments').forEach(function(env) {
