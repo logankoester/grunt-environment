@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/logankoester/grunt-environment.png)](https://travis-ci.org/logankoester/grunt-environment)
 [![Dependency Status](https://david-dm.org/logankoester/grunt-environment.png)](https://david-dm.org/logankoester/grunt-environment)
 [![devDependency Status](https://david-dm.org/logankoester/grunt-environment/dev-status.png)](https://david-dm.org/logankoester/grunt-environment#info=devDependencies)
+[![Gittip](http://img.shields.io/gittip/logankoester.png)](https://www.gittip.com/logankoester/)
 
 [![NPM](https://nodei.co/npm/grunt-environment.png?downloads=true)](https://nodei.co/npm/grunt-environment/)
 
