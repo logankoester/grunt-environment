@@ -1,13 +1,13 @@
-# grunt-environment
+# Grunt: Environment
+> Add environment-centric logic to your Grunt builds
 
 [![Build Status](https://travis-ci.org/logankoester/grunt-environment.png)](https://travis-ci.org/logankoester/grunt-environment)
+[![status](https://sourcegraph.com/api/repos/github.com/logankoester/grunt-environment/badges/status.png)](https://sourcegraph.com/github.com/logankoester/grunt-environment)
 [![Dependency Status](https://david-dm.org/logankoester/grunt-environment.png)](https://david-dm.org/logankoester/grunt-environment)
 [![devDependency Status](https://david-dm.org/logankoester/grunt-environment/dev-status.png)](https://david-dm.org/logankoester/grunt-environment#info=devDependencies)
 [![Gittip](http://img.shields.io/gittip/logankoester.png)](https://www.gittip.com/logankoester/)
 
 [![NPM](https://nodei.co/npm/grunt-environment.png?downloads=true)](https://nodei.co/npm/grunt-environment/)
-
-> Add environment-centric logic to your Grunt builds
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -81,3 +81,10 @@ The additional keys  `timestamp` and `version` are included as well.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/logankoester/grunt-environment/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
+[![xrefs](https://sourcegraph.com/api/repos/github.com/logankoester/grunt-environment/badges/xrefs.png)](https://sourcegraph.com/github.com/logankoester/grunt-environment)
+[![funcs](https://sourcegraph.com/api/repos/github.com/logankoester/grunt-environment/badges/funcs.png)](https://sourcegraph.com/github.com/logankoester/grunt-environment)
+[![top func](https://sourcegraph.com/api/repos/github.com/logankoester/grunt-environment/badges/top-func.png)](https://sourcegraph.com/github.com/logankoester/grunt-environment)
+[![library users](https://sourcegraph.com/api/repos/github.com/logankoester/grunt-environment/badges/library-users.png)](https://sourcegraph.com/github.com/logankoester/grunt-environment)
+[![authors](https://sourcegraph.com/api/repos/github.com/logankoester/grunt-environment/badges/authors.png)](https://sourcegraph.com/github.com/logankoester/grunt-environment)
+[![Total views](https://sourcegraph.com/api/repos/github.com/logankoester/grunt-environment/counters/views.png)](https://sourcegraph.com/github.com/logankoester/grunt-environment)
+[![Views in the last 24 hours](https://sourcegraph.com/api/repos/github.com/logankoester/grunt-environment/counters/views-24h.png)](https://sourcegraph.com/github.com/logankoester/grunt-environment)
