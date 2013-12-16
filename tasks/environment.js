@@ -56,6 +56,11 @@
     };
     grunt.config.get('environment.environments').forEach(function(env) {
       return grunt.registerTask("environment:" + env, function() {
+        var config = grunt.config("default") || {};
+        grunt.util._.merge(config, grunt.config(env));        
+        Object.keys(config).forEach(function(key) {
+          grunt.config(key, config[key]);
+        });
         writeBuildConfig({
           env: env
         });
