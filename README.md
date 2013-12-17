@@ -1,6 +1,7 @@
 # Grunt: Environment
 > Add environment-centric logic to your Grunt builds
 
+[![Strider Status](http://ci.ldk.io/logankoester/grunt-environment/badge)](http://ci.ldk.io/logankoester/grunt-environment/)
 [![Build Status](https://travis-ci.org/logankoester/grunt-environment.png)](https://travis-ci.org/logankoester/grunt-environment)
 [![status](https://sourcegraph.com/api/repos/github.com/logankoester/grunt-environment/badges/status.png)](https://sourcegraph.com/github.com/logankoester/grunt-environment)
 [![Dependency Status](https://david-dm.org/logankoester/grunt-environment.png)](https://david-dm.org/logankoester/grunt-environment)
