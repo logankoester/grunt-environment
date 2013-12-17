@@ -20,6 +20,12 @@
       environment = grunt.file.readJSON('.grunt/environment.json');
       test.equal(environment.env, 'development', 'should include the development env');
       return test.done();
+    },
+    'merged keys': function(test) {
+      test.expect(2);
+      test.equal(grunt.config.get('merge.unchanged'), true);
+      test.equal(grunt.config.get('merge.active'), 'development', 'should merge environment-scoped configuration keys');
+      return test.done();
     }
   };
 

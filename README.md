@@ -47,16 +47,86 @@ The **grunt-environment** plugin will add the tasks `environment:development` an
 
 They will maintain state in a file called `.grunt/environment.json` in your project directory.
 
-You can now use `grunt.config.get('environment.env')` in your other Grunt tasks to
-create conditions around these environments.
+## Divergent task configuration
+
+There are two ways to create Grunt configuration for your environments.
+
+### Branched object
+
+This bit of syntactic sugar added in `v0.4.0` covers most common scenarios.
+
+#### Example
+
+```JavaScript
+config: {
+  hostname: 'http://development.example.com', // (unaffected)
+  development: {
+    output_dir: 'build/development'
+  },
+  production: {
+    output_dir: 'build/production'
+  },
+  environment: {
+    default: 'development',
+    environments: ['development', 'production']
+  }
+}
+```
+
+The environment you are using gets merged back into the main config:
+
+```
+grunt environment:production
+```
+
+...makes the config behave as if it were:
+
+```JavaScript
+config: {
+  hostname: 'http://development.example.com', // (unaffected)
+  output_dir: 'build/production',
+}
+```
+
+### Conditional logic
+
+For more complex configuration, you can also use `grunt.config.get('environment.env')` or it's handy alias
+`grunt.environment()` in your Grunt tasks to create conditions around these environments.
+
+#### Example
+
+```javascript
+
+// Environment-specific configuration for grunt-contrib-clean.
+// When the **development** environment is active, `grunt clean` will remove files inside `build/development`
+// When the **production** environment is active, `grunt clean` will remove files inside `build/production`
+
+clean: {
+  build: (function() {
+    switch (grunt.environment()) {
+      case 'development':
+        return ['build/development'];
+      case 'production':
+        return ['build/production'];
+    }
+  })()
+}
+
+```
 
 > `v0.2.0` adds the alias `grunt.environment()` to the current `env` value.
 
-The additional keys  `timestamp` and `version` are included as well.
+The additional keys `timestamp` and `version` are included as well.
 
 > You may find it useful to pass `build` as a variable into a template for your application to use at runtime.
 
 ## Release History
+
+### 0.4.0
+
+* Adds **Branched Object** merge feature suggested by @colwilson
+* Adds dependency `lodash` (Grunt external libraries are deprecated)
+* Original configuration is now preserved upon initialization as `config.environment.meta`
 
 ###  0.3.0
 

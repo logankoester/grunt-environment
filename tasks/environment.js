@@ -1,6 +1,7 @@
 (function() {
   module.exports = function(grunt) {
-    var defaultFile, ensureDefaultDirExists, getFile, initEnvironment, path, readBuildConfig, writeBuildConfig;
+    var defaultFile, ensureDefaultDirExists, getFile, initEnvironment, mergeEnvironmentKeys, path, readBuildConfig, writeBuildConfig, _;
+    _ = require('lodash');
     path = require('path');
     defaultFile = path.join('.grunt', 'environment.json');
     getFile = function() {
@@ -13,9 +14,10 @@
       return file;
     };
     readBuildConfig = function() {
-      var defaultEnv, file, version;
+      var defaultEnv, file, meta, version;
       version = grunt.config.get('environment.version');
       defaultEnv = grunt.config.get('environment.default');
+      meta = grunt.config.get('environment');
       if (typeof version === 'function') {
         version = version();
       }
@@ -28,6 +30,7 @@
       grunt.config.set('environment', grunt.file.readJSON(file));
       grunt.config.set('environment.timestamp', Date.now());
       grunt.config.set('environment.version', version);
+      grunt.config.set('environment.meta', meta);
       return grunt.log.ok("Current environment: " + (grunt.config.get('environment.env')));
     };
     writeBuildConfig = function(config) {
@@ -47,20 +50,34 @@
     initEnvironment = function() {
       var defaultEnv, error;
       try {
-        return readBuildConfig();
+        readBuildConfig();
+        return mergeEnvironmentKeys();
       } catch (_error) {
         error = _error;
         defaultEnv = grunt.config.get('environment.default');
         return grunt.task.run("environment:" + defaultEnv);
       }
     };
+    mergeEnvironmentKeys = function() {
+      var environments;
+      environments = grunt.config.get('environment.meta.environments');
+      return _.forEach(grunt.config.get(), function(value, key) {
+        value = grunt.config.get(key);
+        if (_.isObject(value)) {
+          return _.forEach(environments, function(environment) {
+            if (_.has(value, environment)) {
+              if (environment === grunt.environment()) {
+                return grunt.config.set(key, _.merge(grunt.config.get(key), value[environment]));
+              } else {
+                return grunt.config.set("" + key + "." + environment, void 0);
+              }
+            }
+          });
+        }
+      });
+    };
     grunt.config.get('environment.environments').forEach(function(env) {
       return grunt.registerTask("environment:" + env, function() {
-        var config = grunt.config("default") || {};
-        grunt.util._.merge(config, grunt.config(env));        
-        Object.keys(config).forEach(function(key) {
-          grunt.config(key, config[key]);
-        });
         writeBuildConfig({
           env: env
         });

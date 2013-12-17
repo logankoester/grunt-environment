@@ -14,6 +14,14 @@ module.exports = (grunt) ->
       version: '0.0.0'
       file: '.grunt/environment.json'
 
+    # Just a supporting object for the test runner...
+    merge:
+      unchanged: true
+      development:
+        active: 'development'
+      production:
+        active: 'production'
+
     nodeunit:
       tests: ['test/*_test.js']
 

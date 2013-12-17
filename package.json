@@ -42,5 +42,8 @@
   "keywords": [
     "gruntplugin",
     "environment"
-  ]
+  ],
+  "dependencies": {
+    "lodash": "~2.4.1"
+  }
 }

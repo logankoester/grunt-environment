@@ -7,6 +7,7 @@
 #
 
 module.exports = (grunt) ->
+  _ = require 'lodash'
   path = require 'path'
   defaultFile = path.join('.grunt', 'environment.json')
 
@@ -17,8 +18,9 @@ module.exports = (grunt) ->
     file
 
   readBuildConfig = ->
-    version = grunt.config.get('environment.version')
-    defaultEnv = grunt.config.get('environment.default')
+    version = grunt.config.get 'environment.version'
+    defaultEnv = grunt.config.get 'environment.default'
+    meta = grunt.config.get 'environment'
 
     if typeof version == 'function' then version = version()
     if typeof defaultEnv == 'function' then defaultEnv = defaultEnv()
@@ -30,6 +32,7 @@ module.exports = (grunt) ->
     grunt.config.set 'environment', grunt.file.readJSON(file)
     grunt.config.set 'environment.timestamp', Date.now()
     grunt.config.set 'environment.version', version
+    grunt.config.set 'environment.meta', meta
     grunt.log.ok "Current environment: #{grunt.config.get('environment.env')}"
 
   writeBuildConfig = (config) ->
@@ -45,9 +48,22 @@ module.exports = (grunt) ->
   initEnvironment = ->
     try
       readBuildConfig()
+      mergeEnvironmentKeys()
     catch error
       defaultEnv = grunt.config.get('environment.default')
       grunt.task.run "environment:#{defaultEnv}"
+
+  mergeEnvironmentKeys = ->
+    environments = grunt.config.get 'environment.meta.environments'
+    _.forEach grunt.config.get(), (value, key) ->
+      value = grunt.config.get(key)
+      if _.isObject value
+        _.forEach environments, (environment) ->
+          if _.has(value, environment)
+            if environment == grunt.environment()
+              grunt.config.set key, _.merge(grunt.config.get(key), value[environment])
+            else
+              grunt.config.set "#{key}.#{environment}", undefined
 
   grunt.config.get('environment.environments').forEach (env) ->
     grunt.registerTask "environment:#{env}", ->
