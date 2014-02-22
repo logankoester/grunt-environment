@@ -90,6 +90,14 @@
     grunt.environment = function() {
       return grunt.config.get('environment.env');
     };
+    grunt.environmentVar = function(name) {
+      var config = grunt.config.get(grunt.config.get('environment.env'));
+      if (config && config[name] !== undefined) {
+        return config[name];
+      }
+      grunt.log.error('environment config not found for variable"'+name+'"');
+      return null;
+    };
     return initEnvironment();
   };
 
