@@ -123,6 +123,9 @@ The additional keys `timestamp` and `version` are included as well.
 
 ## Release History
 
+### 0.4.2
+* Extend to allow pulling environment vars from global config (see [#4](https://github.com/logankoester/grunt-environment/pull/4))
+
 ### 0.4.0
 
 * Adds **Branched Object** merge feature suggested by @colwilson
