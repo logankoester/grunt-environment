@@ -1,7 +1,7 @@
 {
   "name": "grunt-environment",
   "description": "Add environment-centric logic to your Grunt builds",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "homepage": "https://github.com/logankoester/grunt-environment",
   "author": {
     "name": "Logan Koester",
